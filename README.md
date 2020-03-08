@@ -1,4 +1,3 @@
-# how to host a rasa application 
 # How to host a rasa chatbot using NGINX on a linux machine from scratch
 
 <h2>Introduction</h2>
@@ -38,7 +37,7 @@ cd chatBot
 python3.6 -m venv rasaChatBot
 </pre>
 
-<b> Now we have to activate the virtual environment by the following command:
+<b> Now we have to activate the virtual environment by the following command: </b>
 <pre>
 . rasaChatBot/bin/activate
 </pre>
