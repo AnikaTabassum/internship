@@ -42,8 +42,8 @@ python3.6 -m venv rasaChatBot
 . rasaChatBot/bin/activate
 </pre>
 
-<b> Now that we have our virtual environment set perfectly, we will start installing packages.</b>
-Step 5: Install RASA NLU </b>
+ Now that we have our virtual environment set perfectly, we will start installing packages.</br>
+<b>Step 5: Install RASA NLU </b>
 
 <pre>
 sudo apt-get install python3.6-dev
