@@ -129,7 +129,7 @@ sudo systemctl restart nginx
 
 Now that your nginx is running, it's final part to run rasa as a service in the background 
 <h3>Running rasa as e service</h3>
-As you know, to run a rasa chatbot, we have to run two things. rasa action server and rasa ui. So we have to make two shell scripts and run these two scripts from two separate services.
+As you know, to run a rasa chatbot, we have to run rasa action server and rasa ui. So we have to make two shell scripts and run these two scripts from two separate services.
 <br>
 First, we are going to create a script to run the action server. Open the script file with:
 <pre>
@@ -137,9 +137,9 @@ sudo nano /usr/local/bin/action.sh
 </pre>
 Add there the following lines:
 <pre>
-cd /data/rasabot; 															//path where the chatbot is
-. /your/path/to/th/virtual/environment/bin/activate							//activate environment
-rasa run actions															//run action server
+cd /data/rasabot; 														                         	  //path where the chatbot is
+. /your/path/to/the/virtual/environment/bin/activate							//activate environment
+rasa run actions													                           		 //run action server
 </pre>
 
 Next, we need to create a script to run the ui. Open the script file with:
@@ -147,13 +147,13 @@ Next, we need to create a script to run the ui. Open the script file with:
 sudo nano /usr/local/bin/runUi.sh
 </pre>
 <pre>
-cd /data/rasabot; 																		//path where the chatbot is
+cd /data/rasabot; 																	                          	//path where the chatbot is
 . /your/path/to/th/virtual/environment/bin/activate											//activate environment
 python -m rasa run --m ./models --endpoints endpoints.yml --port 5005 -vv --enable-api --cors "*"     //run rasa ui
 </pre>
 
-Now, you have to create to services to run two script files.
-To create service for action, give the following command:
+Now, you have to create two services to run two script files.
+To create a service for action, give the following command:
 <pre>
 sudo nano /etc/systemd/system/botAction.service 
 </pre>
@@ -173,7 +173,7 @@ ExecStart=/usr/local/bin/action.sh
 WantedBy=multi-user.target
 
 </pre>
-
+Which runs the action.sh script file as a service, which runs the action server.</br>
 Next, we need to make the service file for UI by giving the following command:
 
 <pre>
@@ -195,21 +195,22 @@ ExecStart=/usr/local/bin/runUi.sh
 [Install]
 WantedBy=multi-user.target
 </pre>
-Now you have to enable and start the services with the following commands:
+This service will run rasa ui as a service </br>
+Now we have to enable and start the services. To start the botAction service give the following commands:
 <pre>
 sudo systemctl enable botAction
 sudo systemctl daemon-reload
-
 sudo systemctl restart botAction
 sudo systemctl status botAction
-
-
+</pre>
+To start the botUI service give the following commands:
+<pre>
 sudo systemctl enable botUI
 sudo systemctl daemon-reload
-
 sudo systemctl restart botUI
 sudo systemctl status botUI
 </pre>
 now restart nginx, hope your application is successfully hosted:
 <pre>
-susdo systemctl restart nginx</pre>
+sudo systemctl restart nginx</pre>
+Now if you open your IP address in a browser, you will be able to chat with your rasa application. 
