@@ -1,4 +1,4 @@
-# How to host a rasa chatbot using NGINX on a linux machine from scratch
+# How to host a rasa chatbot using NGINX on a ubuntu machine from scratch
 
 <h2>Introduction</h2>
 
