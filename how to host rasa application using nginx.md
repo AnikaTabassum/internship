@@ -137,6 +137,7 @@ sudo nano /usr/local/bin/action.sh
 </pre>
 Add there the following lines:
 <pre>
+#!/bin/bash
 cd /data/rasabot; 														                         	  //path where the chatbot is
 . /your/path/to/the/virtual/environment/bin/activate							//activate environment
 rasa run actions													                           		 //run action server
@@ -147,6 +148,7 @@ Next, we need to create a script to run the ui. Open the script file with:
 sudo nano /usr/local/bin/runUi.sh
 </pre>
 <pre>
+#!/bin/bash
 cd /data/rasabot; 																	                          	//path where the chatbot is
 . /your/path/to/th/virtual/environment/bin/activate											//activate environment
 python -m rasa run --m ./models --endpoints endpoints.yml --port 5005 -vv --enable-api --cors "*"     //run rasa ui
@@ -213,4 +215,13 @@ sudo systemctl status botUI
 now restart nginx, hope your application is successfully hosted:
 <pre>
 sudo systemctl restart nginx</pre>
-Now if you open your IP address in a browser, you will be able to chat with your rasa application. 
+Now if you open your IP address in a browser, you will be able to chat with your rasa application. But if you face an error-
+<pre>
+<span style="color:red"> Access to XMLHttpRequest at 'http://your.ip.address:5005/webhooks/rest/webhook' from origin 'http://your.ip.address has been blocked by CORS policy: Response to preflight request doesn't pass access control check: No 'Access-Control-Allow-Origin' header is present on the requested resource. </span>
+</pre>
+It's because your port 5005 is blocked. You can open your port with the following commands:
+<pre>
+sudo /sbin/iptables -A INPUT -m state --state NEW -m tcp -p tcp --dport 5005 -j ACCEPT
+sudo /sbin/iptables-save
+</pre>
+Now hope you are able to chat with your rasa application. 
