@@ -1,0 +1,121 @@
+cd /tmp/
+curl -O https://repo.anaconda.com/archive/Anaconda3-5.3.1-Linux-x86_64.sh
+bash Anaconda3-5.3.1-Linux-x86_64.sh
+conda create -n myenv python=3.6.8
+source ~/.bashrc
+conda info
+source ~/.bashrc
+PATH=~/anaconda3/bin:$PATH
+cd ~
+nano .bashrc >>>>>>>>>>> export PATH=~/anaconda3/bin:$PATH
+conda --version
+source activate myenv
+pip --version
+pip install --upgrade pip==19.3.1
+pip --version
+conda install tensorflow==1.15
+pip list
+pip install rasa-nlu==0.15.1
+pip install rasa-core==0.14.5
+pip install rasa==1.6.1
+pip list
+conda -m spacy download en
+conda install spacy
+python3
+python -m spacy download en_core_web_sm
+pip list
+pip install gym==0.15.4
+rasa
+pip install questionary==1.4.0
+ yum update
+yum install nginx
+ufw allow 'Nginx HTTP'
+systemctl start nginx
+systemctl status nginx.service
+yum install epel-release
+yum install nginx
+netstat -tulpn
+kill -2 1180
+systemctl start nginx
+systemctl enable nginx
+nano /etc/naginx/nginx.conf>>>>>>>>>>>>>>
+server {
+         listen       80 default_server;
+         listen       [::]:80 default_server;
+#        listen       443 ssl http2 default_server;
+#         listen       [::]:443 ssl http2 default_server;
+
+        server_name  63.250.35.120;
+        #root         /usr/share/nginx/html;
+        #root          /data/mychatbot;
+        root            /data/licbot;
+        }
+        
+mkdir /data
+cd /data
+ cp -r /root/anaconda3/envs/myenv/Scode/LicChatbot/ mychatbot
+/sbin/iptables -I INPUT -p tcp -m tcp --dport 5005 -j ACCEPT
+/sbin/service iptables save
+
+
+nano /var/tmp/botAction.sh
+
+#!/bin/sh
+
+cd /root/anaconda3/envs/myenv/Scode/LICbot
+pwd
+. /root/anaconda3/bin/activate myenv
+rasa run actions;
+pwd
+#mkdir /root/anaconda3/envs/myenv/Scode/haha;
+
+
+nano /var/tmp/botUi.sh
+
+#!/bin/sh
+
+cd /root/anaconda3/envs/myenv/Scode/LICbot
+pwd
+. /root/anaconda3/bin/activate myenv
+python -m rasa run --m ./models --endpoints endpoints.yml --port 5005 -vv --enable-api --cors "*"
+pwd
+#mkdir /root/anaconda3/envs/myenv/Scode/haha;
+
+
+nano /etc/systemd/system/botAction.service 
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+[Unit]
+Description=Description for sample script goes here
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/bin/bash /var/tmp/botAction.sh
+TimeoutStartSec=0
+
+[Install]
+WantedBy=default.target
+
+nano /etc/systemd/system/botUi.service
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+[Unit]
+Description=Description for sample script goes here
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/bin/bash /var/tmp/botUi.sh
+TimeoutStartSec=0
+
+[Install]
+WantedBy=default.target
+
+
+systemctl daemon-reload
+systemctl enable botAction.service
+systemctl start botAction.service
+systemctl status botAction.service -l
+systemctl enable botui.service
+systemctl enable botUi.service
+systemctl status botAction.service
+systemctl status botUi.service
